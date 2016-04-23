@@ -87,7 +87,7 @@ class keyboard_shortcuts_ng extends rcube_plugin
      *         'messagelist_select_all_on_page' => array('shortcut' => 'ctrl a',     'context' => array('list'    => array(), 'preview' => array())),
      *
      *
-     *     Valid in all contexts:
+     *     Valid in all contexts - DO NOT USE, weird things start to happen (unable to type in compose window and such):
      *
      *         'searchbox_focus'                => array('shortcut' => 'ctrl s',     'context' => NULL),
      *
@@ -101,9 +101,9 @@ class keyboard_shortcuts_ng extends rcube_plugin
      */
     protected $config = array(
         // General actions
-        'ks_ng_help_display'             => array('shortcut' => 'shift ?'),
+        'ks_ng_help_display'             => array('shortcut' => 'shift ?',      'context' => array('list'=>true, 'preview'=>true)),
         'checkmail'                      => array('shortcut' => 'u',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'searchbox_focus'                => array('shortcut' => 's'),
+        'searchbox_focus'                => array('shortcut' => 's',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
         // TODO also bind shift+k to searchbox (similar to browser's ctrl+k)
 
         // List actions
