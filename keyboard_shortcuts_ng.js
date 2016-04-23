@@ -53,7 +53,7 @@ $(function() {
      */
     $(window.setTimeout(function() {
         $('#messagecontframe').contents().keydown(function (e) {
-            ks_ng_keypress_event_handler(e);
+            return ks_ng_keypress_event_handler(e);
         });
     }, 1000));
 
