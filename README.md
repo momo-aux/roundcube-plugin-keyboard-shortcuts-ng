@@ -19,6 +19,15 @@ TODO
 
 
 
+## TODO
+
+Details that need attention:
+- make it actually configurable (two modes - merge and override)
+- fix bug when no message is show in preview pane but focus is on it - shortcuts do not work there
+- add support for multiple shortcuts to single action
+
+
+
 ## Legacy
 
 This plugin came to life as an offspring of original
