@@ -48,6 +48,17 @@ $(function() {
 
 
 
+    /**
+     * Workaround: if clicked on preview pane while no message is displayed
+     */
+    $(window.setTimeout(function() {
+        $('#messagecontframe').contents().keydown(function (e) {
+            ks_ng_keypress_event_handler(e);
+        });
+    }, 1000));
+
+
+
     /*
      * Keypress event handler
      */
