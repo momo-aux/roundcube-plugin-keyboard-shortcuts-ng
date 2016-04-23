@@ -1,9 +1,15 @@
 {
     "name": "teon/keyboard_shortcuts_ng",
+    "type": "roundcube-plugin",
     "description": "Configurable keyboard shortcuts",
+    "keywords": [
+        "keyboard",
+        "shortcut",
+        "shortcuts",
+        "configurable",
+    ],
     "license": "GPL-2.0",
     "homepage": "https://github.com/teonsystems/roundcube-plugin-keyboard-shortcuts-ng",
-    "type": "roundcube-plugin",
     "authors": [
         {
             "name": "Bostjan Skufca",
