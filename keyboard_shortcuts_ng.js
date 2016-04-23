@@ -94,6 +94,18 @@ $(function() {
         keypress_id = ks_ng_generate_keypress_id(e);
 
 
+        // Do not enable shortcuts if current focus is on any form element (input, textarea)
+        // that expects typed input. Exception is ctrl+enter shortcut for sending email.
+        if ($("*:focus").is("textarea, input")) {
+            if ($("*:focus").is("textarea") && 'ctrl enter' == keypress_id) {
+                // Continue processing below
+            } else {
+                return true;
+            }
+        }
+
+
+
         // Find appropriate action
         config = rcmail.env.ks_ng_config;
         action_id = ks_ng_find_action_id(keypress_id, cur_context, config);
