@@ -80,7 +80,7 @@ $(function() {
 
         supported_contexts = rcmail.env.ks_ng_supported_contexts;
         if (typeof supported_contexts[cur_context] == 'undefined') {
-            console.log('Unsupported context: ' + cur_context);
+            ks_ng_error('Unsupported context: ' + cur_context);
             return true;
         }
 
