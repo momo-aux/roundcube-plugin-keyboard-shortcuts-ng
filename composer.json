@@ -1,22 +1,36 @@
 {
-  "name":"dapphp/keyboard_shortcuts",
-  "description":"allows some functionality to be handled with the keyboard",
-  "license":"GPL-2.0",
-  "homepage":"https://github.com/corbosman/keyboard_shortcuts",
-  "type": "roundcube-plugin",
-  "authors": [
-          {
-              "name": "Cor Bosman",
-              "email": "cor@roundcu.be",
-              "homepage": "http://underwa.ter.net",
-              "role": "Developer"
-          }
-      ],
-  "support": {
-          "email": "cor@roundcu.be",
-          "issues": "https://github.com/corbosman/keyboard_shortcuts/issues"
-      },
+    "name": "teon/keyboard_shortcuts_ng",
+    "description": "Configurable keyboard shortcuts",
+    "license": "GPL-2.0",
+    "homepage": "https://github.com/teonsystems/roundcube-plugin-keyboard-shortcuts-ng",
+    "type": "roundcube-plugin",
+    "authors": [
+        {
+            "name": "Bostjan Skufca",
+            "email": "bostjan@teon.si",
+            "homepage": "https://www.teon.si",
+            "role": "Lead"
+        },
+        {
+            "name": "Cor Bosman",
+            "email": "cor@roundcu.be",
+            "homepage": "http://underwa.ter.net",
+            "role": "Original author"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://plugins.roundcube.net"
+        }
+    ],
     "require": {
+        "php": ">=5.3.0",
         "roundcube/plugin-installer": ">=0.1.7"
+    },
+    "extra": {
+        "roundcube": {
+            "min-version": "1.1.4"
+        }
     }
 }

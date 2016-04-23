@@ -1,21 +1,34 @@
-keyboard_shortcuts
-==================
+# Roundcube plugin - Keyboard Shortcuts NG
 
-keyboard_shortcuts allows some functionality to be handled with the keyboard. It adds an icon to the mail screen to view all available shortcuts. 
+Plugin that enables keyboard shortcuts, and makes associations configurable
+by Roundcube admin.
 
-OLD VERSIONS
-------------
 
-This project has moved from Google Code to git. Older version are available at [Google Code](http://code.google.com/p/roundcube-plugins/downloads/list). This git repository is only for roundcube versions 0.8 and higher.
 
-CONTACT
--------
-Author:   Cor Bosman (cor@roundcu.be)
+## Installation
 
-Bug reports through github (https://github.com/corbosman/keyboard_shortcuts/issues)
+Like any normal Roundcube plugin.
 
-LICENSE
--------
+
+
+## Configuration
+
+Via main Roundcube config file (files in plugin/keyboard_shortcuts_ng/config/ are ignored).
+
+TODO
+
+
+
+## Legacy
+
+This plugin came to life as an offspring of original
+[keyboard_shortcuts](https://github.com/corbosman/keyboard_shortcuts) plugin,
+joined by a series of merges of almost all unmerged changes throughout GitHub,
+fueled by major refactoring and implementation of configurable key associations.
+
+
+
+## License
 
 This plugin is distributed under the GNU General Public License Version 2.
 Please read through the file LICENSE for more information about this license.
