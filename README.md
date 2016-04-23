@@ -43,5 +43,5 @@ fueled by major refactoring and implementation of configurable key associations.
 
 ## License
 
-This plugin is distributed under the GNU General Public License Version 2.
+This plugin is distributed under the GNU Affero General Public License Version 3.
 Please read through the file LICENSE for more information about this license.
