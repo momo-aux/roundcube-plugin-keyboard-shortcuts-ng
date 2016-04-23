@@ -99,7 +99,8 @@ $(function() {
         action_id = ks_ng_find_action_id(keypress_id, cur_context, config);
         if (null == action_id) {
 //ks_ng_debug('no action defined for this keypress_id: ' + keypress_id);
-            return false;
+            // Return true so that the event processing continues
+            return true;
         }
 //ks_ng_debug('matching action found: ' + action_id);
 
