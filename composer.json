@@ -16,12 +16,6 @@
             "email": "bostjan@teon.si",
             "homepage": "https://www.teon.si",
             "role": "Lead"
-        },
-        {
-            "name": "Cor Bosman",
-            "email": "cor@roundcu.be",
-            "homepage": "http://underwa.ter.net",
-            "role": "Original author"
         }
     ],
     "repositories": [
