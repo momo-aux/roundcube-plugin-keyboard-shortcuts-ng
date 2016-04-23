@@ -3,6 +3,10 @@
 Plugin that enables keyboard shortcuts, and makes associations configurable
 by Roundcube admin.
 
+Supports _almost all_ possible keyboard shortcuts (any combination of alt, ctrl,
+meta and shift keys), and all of character, number, punctuation, direction, F1-F12
+keys with addition of backspace and delete key + ctrl+enter for send mail.
+
 
 
 ## Installation

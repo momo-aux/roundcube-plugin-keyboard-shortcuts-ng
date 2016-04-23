@@ -73,6 +73,13 @@ class keyboard_shortcuts_ng extends rcube_plugin
      * - each context can have dedicated shortcut defined for that action (this use is discouraged!)
      * - if context does not have shortcut defined, main shortcut is used
      * - see above for list of supported contexts
+     * - supplemental keys are detected in alphabetical order ('alt ctrl o' is ok, where 'ctrl alt o' is unacceptable)
+     *
+     * Supported supplemental keys:
+     * - 'alt'
+     * - 'ctrl'
+     * - 'meta'
+     * - 'shift'
      *
      *
      * Configuration examples:

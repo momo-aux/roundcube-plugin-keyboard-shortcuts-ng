@@ -20,11 +20,16 @@ $(function() {
 
 
     /*
-     * Set up main keypress event listener
+     * Set up main keyboard event listener
+     *
+     * We are using keydown event instead of keypress (or keyup) to be able
+     * and override browser-specific shortcuts. Keypress does not capture ctrl+key
+     * events, and keyup is already too late for those events.
      */
-    $(document).keypress(
+    $(document).keydown(
         function (e)
         {
+//ks_ng_debug('event=keydown')
             return ks_ng_keypress_event_handler(e);
         }
     );
@@ -90,8 +95,14 @@ $(function() {
         }
 
 
-        // Generate appropriate keypress id, to be searched in PHP config array for appropriate action
+        // Generate appropriate keypress id, to be searched in shortcut
+        // config array for appropriate action. If partial keypress is detected
+        // (i.e. ctrl key only, before final character key is pressed), ignore it.
         keypress_id = ks_ng_generate_keypress_id(e);
+        if (null == keypress_id) {
+//ks_ng_debug('partial keypress, ignoring');
+            return true;
+        }
 
 
         // Do not enable shortcuts if current focus is on any form element (input, textarea)
@@ -138,39 +149,108 @@ function ks_ng_generate_keypress_id (e)
     id = '';
 
     // Detect additional supported keys pressed
+    altKey = false;
+    if (e.altKey) {
+        altKey = true;
+        id += 'alt ';
+    }
+
     ctrlKey = false;
     if (e.ctrlKey) {
         ctrlKey = true;
         id += 'ctrl ';
     }
+
+    metaKey = false;
+    if (e.metaKey) {
+        metaKey = true;
+        id += 'meta ';
+    }
+
     shiftKey = false;
     if (e.shiftKey) {
         shiftKey = true;
         id += 'shift ';
     }
 
-//ks_ng_debug(e.which);
-    // Key that is actually pressed
-    switch (e.which) {
+
+    // Get key code to evaluate
+    keycode = e.which
+//ks_ng_debug('keycode: ' + keycode);
+
+
+    // Key that is actually pressed - evaluate
+    switch (keycode) {
+        case 8:
+            id += 'backspace'; break;
+
         case 10:
         case 13:
-            id += 'enter';
-            break;
+            id += 'enter'; break;
+
+        case 37:
+            id += 'left';  break;
+        case 38:
+            id += 'up';    break;
+        case 39:
+            id += 'right'; break;
+        case 40:
+            id += 'down';  break;
+
+        case 46:
+            id += 'delete'; break;
+
+        case 186:
+            id += ';';     break;
+        case 187:
+            id += '=';     break;
+        case 188:
+            id += ',';     break;
+        case 189:
+            id += '?';     break;
+        case 190:
+            id += '.';     break;
+        case 191:
+            id += '-';     break;
+        case 192:
+//            id += '~';     break;
+            id += '`';     break;
+
+        case 219:
+            id += '[';     break;
+        case 220:
+            id += '\\';    break;
+        case 221:
+            id += ']';     break;
+        case 222:
+            id += "'";     break;
+        case 219:
+            id += '[';     break;
 
         default:
-            // When ctrl+shift+char are pressed, key 'a' is represented by number 1 instead of 97
-            numeric_key_id = e.which;
-            if (ctrlKey && shiftKey) {
-                numeric_key_id += 96;
+            // f1-f12
+            if ((112 <= keycode) && (keycode <= 123)) {
+                id += 'f' + (keycode - 111)
+                break;
             }
-//ks_ng_debug(numeric_key_id);
 
-            id += String.fromCharCode(numeric_key_id).toLowerCase();
-            break;
+            // characters & numbers
+            if (
+                ((48  <= keycode) && (keycode <=  57)) // numbers
+                ||
+                ((65  <= keycode) && (keycode <=  90)) // characters
+            ) {
+                id += String.fromCharCode(keycode).toLowerCase();
+                break;
+            }
+
+            // Unsupported keypress, or partial keypress
+//ks_ng_debug('keycode out of acceptable range: ' + keycode);
+            return null;
     }
 
     id = id.trim();
-//ks_ng_debug(id);
+//ks_ng_debug('final detected keypress: ' + id);
 
     return id;
 }
