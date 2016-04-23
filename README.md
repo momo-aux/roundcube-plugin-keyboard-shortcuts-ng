@@ -23,9 +23,9 @@ TODO
 
 Details that need attention:
 - make it actually configurable (two modes - merge and override)
-- fix bug when no message is show in preview pane but focus is on it - shortcuts do not work there
 - add support for multiple shortcuts to single action
-
+- when previewpane is empty, 'c' for compose shortcut does not work - 404 because of skins/theme/... src= value
+- fix help output to display actual associations
 
 
 ## Legacy
