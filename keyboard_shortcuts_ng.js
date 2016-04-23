@@ -69,6 +69,16 @@ $(function() {
         }
 
 
+        // Get supporting objects
+        if (cur_context == 'preview') {
+            rcmailobj = window.parent.rcmail;
+            windowobj = window.parent;
+        } else {
+            rcmailobj = rcmail;
+            windowobj = window;
+        }
+
+
         // Generate appropriate keypress id, to be searched in PHP config array for appropriate action
         keypress_id = ks_ng_generate_keypress_id(e);
 
@@ -84,8 +94,7 @@ $(function() {
 
 
         // Execute found action
-        return ks_ng_exec_action(action_id, cur_context, rcmail);
-
+        return ks_ng_exec_action(action_id, cur_context, rcmailobj, windowobj);
     }
 });
 
@@ -247,7 +256,7 @@ function ks_ng_find_action_id (search_keypress_id, search_context, config)
  * @param    array         rcmail instance
  * @return   ?
  */
-function ks_ng_exec_action (action_id, context, rcmail)
+function ks_ng_exec_action (action_id, context, rcmailobj, windowobj)
 {
     // ks_ng_actions is defined in another file:   ./keyboard_shortcuts_actions.js
 
@@ -258,7 +267,7 @@ function ks_ng_exec_action (action_id, context, rcmail)
     }
 
     // Call that method
-    return ks_ng_actions[action_id](context, rcmail);
+    return ks_ng_actions[action_id](context, rcmailobj, windowobj);
 }
 
 

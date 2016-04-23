@@ -22,7 +22,7 @@ var ks_ng_actions = new Object();
  *
  *******************************************************************************
  */
-ks_ng_actions.ks_ng_help_display = function (context, rcmail)
+ks_ng_actions.ks_ng_help_display = function (context, rcmailobj, windowobj)
 {
     ks_ng_help_display();
     return false;
@@ -30,19 +30,19 @@ ks_ng_actions.ks_ng_help_display = function (context, rcmail)
 
 
 
-ks_ng_actions.checkmail = function (context, rcmail)
+ks_ng_actions.checkmail = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('checkmail');
+    rcmailobj.command('checkmail');
     return false;
 }
 
 
 
-ks_ng_actions.searchbox_focus = function (context, rcmail)
+ks_ng_actions.searchbox_focus = function (context, rcmailobj, windowobj)
 {
 //ks_ng_debug("Executing action: " + arguments.callee.name);
-    $('#quicksearchbox').focus();
-    $('#quicksearchbox').select();
+    windowobj.$('#quicksearchbox').focus();
+    windowobj.$('#quicksearchbox').select();
     return false;
 }
 
@@ -57,23 +57,23 @@ ks_ng_actions.searchbox_focus = function (context, rcmail)
  *
  *******************************************************************************
  */
-ks_ng_actions.messagelist_select_all_on_page = function (context, rcmail)
+ks_ng_actions.messagelist_select_all_on_page = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('select-all', 'page');
+    rcmailobj.command('select-all', 'page');
     return false;
 }
 
 
 
-ks_ng_actions.messagelist_select_all = function (context, rcmail)
+ks_ng_actions.messagelist_select_all = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('select-all', '');
+    rcmailobj.command('select-all', '');
     return false;
 }
 
 
 
-ks_ng_actions.previewpane_toggle_visibility = function (context, rcmail)
+ks_ng_actions.previewpane_toggle_visibility = function (context, rcmailobj, windowobj)
 {
     $('#mailpreviewtoggle')[0].click();
     return false;
@@ -81,25 +81,25 @@ ks_ng_actions.previewpane_toggle_visibility = function (context, rcmail)
 
 
 
-ks_ng_actions.threads_collapse_all = function (context, rcmail)
+ks_ng_actions.threads_collapse_all = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('collapse-all');
+    rcmailobj.command('collapse-all');
     return false;
 }
 
 
 
-ks_ng_actions.threads_expand_all = function (context, rcmail)
+ks_ng_actions.threads_expand_all = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('expand-all');
+    rcmailobj.command('expand-all');
     return false;
 }
 
 
 
-ks_ng_actions.threads_expand_unread = function (context, rcmail)
+ks_ng_actions.threads_expand_unread = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('expand-unread');
+    rcmailobj.command('expand-unread');
     return false;
 }
 
@@ -114,67 +114,67 @@ ks_ng_actions.threads_expand_unread = function (context, rcmail)
  *
  *******************************************************************************
  */
-ks_ng_actions.message_compose = function (context, rcmail)
+ks_ng_actions.message_compose = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('compose');
+    rcmailobj.command('compose');
     return false;
 }
 
 
 
-ks_ng_actions.message_delete = function (context, rcmail)
+ks_ng_actions.message_delete = function (context, rcmailobj, windowobj)
 {
-    rcmail.command('delete');
+    rcmailobj.command('delete');
     return false;
 }
 
 
 
-ks_ng_actions.message_forward = function (context, rcmail)
+ks_ng_actions.message_forward = function (context, rcmailobj, windowobj)
 {
-//    if (('list' == context) && (rcmail.message_list.selection.length != 1)) {
+//    if (('list' == context) && (rcmailobj.message_list.selection.length != 1)) {
 //        return false;
 //    }
-    rcmail.command('forward');
+    rcmailobj.command('forward');
     return false;
 }
 
 
 
-ks_ng_actions.message_print = function (context, rcmail)
+ks_ng_actions.message_print = function (context, rcmailobj, windowobj)
 {
-    if (('list' == context) && (rcmail.message_list.selection.length != 1)) {
+    if (('list' == context) && (rcmailobj.message_list.selection.length != 1)) {
         return false;
     }
-    rcmail.command('print');
+    rcmailobj.command('print');
     return false;
 }
 
 
 
-ks_ng_actions.message_reply = function (context, rcmail)
+ks_ng_actions.message_reply = function (context, rcmailobj, windowobj)
 {
-    if (('list' == context) && (rcmail.message_list.selection.length != 1)) {
+    if (('list' == context) && (rcmailobj.message_list.selection.length != 1)) {
         return false;
     }
-    rcmail.command('reply');
+    rcmailobj.command('reply');
     return false;
 }
 
 
 
-ks_ng_actions.message_reply_all = function (context, rcmail)
+ks_ng_actions.message_reply_all = function (context, rcmailobj, windowobj)
 {
-    if (('list' == context) && (rcmail.message_list.selection.length != 1)) {
+    if (('list' == context) && (rcmailobj.message_list.selection.length != 1)) {
         return false;
     }
-    rcmail.command('reply-all');
+    rcmailobj.command('reply-all');
     return false;
 }
 
 
 
-ks_ng_actions.message_send = function (context, rcmail)
+ks_ng_actions.message_send = function (context, rcmailobj, windowobj)
 {
     // Fuse: do not act/send email if focus is not on compose body
     if (!$("*:focus").is("#composebody")) {
@@ -187,34 +187,34 @@ ks_ng_actions.message_send = function (context, rcmail)
 
 
 
-ks_ng_actions.message_view_next = function (context, rcmail)
+ks_ng_actions.message_view_next = function (context, rcmailobj, windowobj)
 {
     // FIXME next page in list mode, next message in preview mode
-    rcmail.command('nextmessage');
+    rcmailobj.command('nextmessage');
     return false;
 }
 
 
 
-ks_ng_actions.message_view_prev = function (context, rcmail)
+ks_ng_actions.message_view_prev = function (context, rcmailobj, windowobj)
 {
     // FIXME prev page in list mode, prev message in preview mode
-    rcmail.command('previousmessage');
+    rcmailobj.command('previousmessage');
     return false;
 }
 
 
 
-ks_ng_actions.message_toggle_flag_read = function (context, rcmail)
+ks_ng_actions.message_toggle_flag_read = function (context, rcmailobj, windowobj)
 {
-    var uid = rcmail.message_list.get_selection();
+    var uid = rcmailobj.message_list.get_selection();
 
     if (uid && uid.length > 0) {
-        var mid = rcmail.message_list.rows[uid[0]].id;
+        var mid = rcmailobj.message_list.rows[uid[0]].id;
         if ($('tr#' + mid).hasClass('unread')) {
-            rcmail.command('mark', 'read');
+            rcmailobj.command('mark', 'read');
         } else {
-            rcmail.command('mark', 'unread');
+            rcmailobj.command('mark', 'unread');
         }
         return false;
     } else {
