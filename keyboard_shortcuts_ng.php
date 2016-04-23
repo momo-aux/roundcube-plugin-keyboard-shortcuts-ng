@@ -149,7 +149,7 @@ class keyboard_shortcuts_ng extends rcube_plugin
         $rcmail->output->set_env('ks_ng_config',   $this->config);
 
       if($_SESSION['username'] && empty($_SESSION['plugin.newuserdialog'])){
-        $this->include_stylesheet('keyboard_shortcuts.css');
+        $this->include_stylesheet('keyboard_shortcuts_ng.css');
         $this->include_script('keyboard_shortcuts_ng_actions.js');
         $this->include_script('keyboard_shortcuts_ng.js');
         $this->add_hook('template_container', array($this, 'html_output'));
