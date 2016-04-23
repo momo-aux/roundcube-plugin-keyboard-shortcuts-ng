@@ -6,7 +6,7 @@
         "keyboard",
         "shortcut",
         "shortcuts",
-        "configurable",
+        "configurable"
     ],
     "license": "GPL-2.0",
     "homepage": "https://github.com/teonsystems/roundcube-plugin-keyboard-shortcuts-ng",
