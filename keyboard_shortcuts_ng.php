@@ -41,88 +41,62 @@ class keyboard_shortcuts_ng extends rcube_plugin
 
 
     /*
-     * Actions vs. keyboard shortcuts vs. contexts configuration array
+     * Association map configuration - actions vs. keyboard shortcuts vs. contexts configuration array
      *
-     * Rules:
-     * - more specific setting (context-wise) overrides less-specific one
-     * - each context can have dedicated shortcut defined for that action (this use is discouraged!)
-     * - if context does not have shortcut defined, main shortcut is used
-     * - see above for list of supported contexts
-     * - supplemental keys are detected in alphabetical order ('alt ctrl o' is ok, where 'ctrl alt o' is unacceptable)
-     *
-     * Supported supplemental keys:
-     * - 'alt'
-     * - 'ctrl'
-     * - 'meta'
-     * - 'shift'
-     *
-     *
-     * Configuration examples:
-     *
-     *     Valid in one context only:
-     *
-     *         'message_send'                   => array('shortcut' => 'ctrl enter', 'context' => array('compose' => array())),
-     *
-     *
-     *     Valid in multiple (but not all) contexts:
-     *
-     *         'messagelist_select_all_on_page' => array('shortcut' => 'ctrl a',     'context' => array('list'    => array(), 'preview' => array())),
-     *
-     *
-     *     Valid in all contexts - DO NOT USE, weird things start to happen (unable to type in compose window and such):
-     *
-     *         'searchbox_focus'                => array('shortcut' => 'ctrl s',     'context' => NULL),
-     *
-     *
-     *     'shortcut' key can be either string or array of strings:
-     *
-     *          'shortcut' => 'ctrl s',
-     *          'shortcut' => array('ctrl s', 'alt s'),
-     *
+     * See config/defaults.inc.php for details
+     */
+    protected $association_map = NULL;
+
+
+
+    /*
+     * Initialization
      *
      */
-    protected $config = array(
-        // General actions
-        'ks_ng_help_display'             => array('shortcut' => 'shift ?',      'context' => array('list'=>true, 'preview'=>true)),
-        'checkmail'                      => array('shortcut' => 'u',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'searchbox_focus'                => array('shortcut' => 's',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        // TODO also bind shift+k to searchbox (similar to browser's ctrl+k)
-
-        // List actions
-        'messagelist_select_all_on_page' => array('shortcut' => 'shift a',      'context' => array('list'=>true, 'preview'=>true)),
-        'messagelist_select_all'         => array('shortcut' => 'ctrl shift a', 'context' => array('list'=>true, 'preview'=>true)),
-        'previewpane_toggle_visibility'  => array('shortcut' => 't',            'context' => array('list'=>true, 'preview'=>true)),
-        'threads_collapse_all'           => array('shortcut' => 'shift c',      'context' => array('list'=>true, 'preview'=>true)),
-        'threads_expand_all'             => array('shortcut' => 'shift e',      'context' => array('list'=>true, 'preview'=>true)),
-        'threads_expand_unread'          => array('shortcut' => 'shift u',      'context' => array('list'=>true, 'preview'=>true)),
-
-        // Message actions
-        'message_compose'                => array('shortcut' => 'c',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'message_forward'                => array('shortcut' => 'f',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'message_print'                  => array('shortcut' => 'p',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'message_reply'                  => array('shortcut' => 'r',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'message_reply_all'              => array('shortcut' => 'shift r',      'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        // This one is hardcoded for HTML message composer - iframe/tinymce limitation
-        'message_send'                   => array('shortcut' => 'ctrl enter',   'context' => array('compose' => true)),
-        'message_toggle_flag_read'       => array('shortcut' => 'm',            'context' => array('list'=>true, 'preview'=>true)),
-        'message_view_next'              => array('shortcut' => 'k',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        'message_view_prev'              => array('shortcut' => 'j',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-        // Dangerous, therefore disabled by default
-        // 'message_delete'                 => array('shortcut' => 'd',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    );
-
-
-
     function init()
     {
-        // Get RC instance
-        $this->rc = rcmail::get_instance();
-
         // This plugin is required
         $this->require_plugin('jqueryui');
 
+        // Get RC instance
+        $this->rc = rcmail::get_instance();
+
+        // Read configuration defaults
+        $configAll             = require __DIR__ .'/config/defaults.inc.php';
+        $configPlugin          = $configAll['keyboard_shortcuts_ng'];
+        $this->association_map = $configPlugin['association_map'];
+
+        // Merge local configuration overrides
+        $configPluginLocal = $this->rc->config->get('keyboard_shortcuts_ng', NULL);
+        if (NULL != $configPluginLocal) {
+            if (isset($configPluginLocal['association_map'])) {
+                // We have local overrides, ql
+
+                // Get merge strategy
+                if (isset($configPluginLocal['association_map_merge_strategy'])) {
+                    $configMergeStrategy = $configPluginLocal['association_map_merge_strategy'];
+                } else {
+                    $configMergeStrategy = $configPlugin['association_map_merge_strategy'];
+                }
+
+                switch ($configMergeStrategy) {
+                    case "merge":
+                        $this->association_map = array_merge($this->association_map, $configPluginLocal['association_map']);
+                        break;
+
+                    case "replace":
+                        $this->association_map = $configPluginLocal['association_map'];
+                        break;
+
+                    default:
+                        throw new Exception("Unsupported association map merge strategy: $configMergeStrategy");
+                }
+            }
+        }
+
+        // Pass configuration to frontend
         $this->rc->output->set_env('ks_ng_supported_contexts', $this->supported_contexts);
-        $this->rc->output->set_env('ks_ng_config',   $this->config);
+        $this->rc->output->set_env('ks_ng_config',   $this->association_map);
 
         // Only load this plugin once user is logged in and when newuserdialog is complete
         if ($_SESSION['username'] && empty($_SESSION['plugin.newuserdialog'])) {

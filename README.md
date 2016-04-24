@@ -11,22 +11,21 @@ keys with addition of backspace and delete key + ctrl+enter for send mail.
 
 ## Installation
 
-Like any normal Roundcube plugin.
+Like any normal Roundcube plugin. Use composer.json.
 
 
 
 ## Configuration
 
-Via main Roundcube config file (files in plugin/keyboard_shortcuts_ng/config/ are ignored).
-
-TODO
+See [config/defaults.inc.php](config/defaults.inc.php) for details.
+Local overrides are done _in main Roundcube configuration file_.
+Files in plugin/keyboard_shortcuts_ng/config/ are ignored.
 
 
 
 ## TODO
 
 Details that need attention:
-- make it actually configurable (two modes - merge and override)
 - add support for multiple shortcuts to single action
 - when previewpane is empty, 'c' for compose shortcut does not work - 404 because of skins/theme/... src= value
 - fix help output to display actual associations
@@ -42,6 +41,7 @@ array(
     //...
 );
 ```
+
 
 
 ## Legacy
