@@ -45,8 +45,7 @@ $(function() {
     $(window.setTimeout(function() {
         $('#composebody_ifr').contents().keydown(function (e) {
             if (rcmail.env.action == 'compose' && (e.which == 13 || e.which == 10) && e.ctrlKey) {
-                $('.button.send').click();
-                return false;
+                return ks_ng_keypress_event_handler(e, 'compose', 'ctrl enter', false, {'is_html_compose':true});
             }
         });
     }, 1000));
@@ -54,11 +53,11 @@ $(function() {
 
 
     /**
-     * Workaround: if clicked on preview pane while no message is displayed
+     * Workaround: if focus is on an empty preview pane, this iframe must pass on keyboard events.
      */
     $(window.setTimeout(function() {
         $('#messagecontframe').contents().keydown(function (e) {
-            return ks_ng_keypress_event_handler(e);
+            return ks_ng_keypress_event_handler(e, 'preview');
         });
     }, 1000));
 
@@ -66,14 +65,26 @@ $(function() {
 
     /*
      * Keypress event handler
+     *
+     * @param    eventObj      Keypress event object
+     * @param    null|string   Context     (null to detect, string to force)
+     * @param    null|string   Keypress ID (null to detect from event itself, string to force)
+     * @param    bool          Check if execution is appropriate (disable if any text field has context and such)
+     * @param    Object        Action arguments
      */
-    function ks_ng_keypress_event_handler (e)
+    function ks_ng_keypress_event_handler (e, cur_context=null, keypress_id=null, check_if_appropriate_situation=true, action_args={})
     {
 //ks_ng_debug('----');
+//ks_ng_debug('arg ctxt: ' + cur_context);
+//ks_ng_debug('arg k_id: ' + keypress_id);
+//ks_ng_debug('arg chk:  ' + check_if_appropriate_situation);
 
         // Check if we are in supported context, and return if not
         // See .php comments for details.
-        cur_context = rcmail.env.action;
+        // (only autodetermine if not passed as an function argument)
+        if (null == cur_context) {
+            cur_context = rcmail.env.action;
+        }
         if ('' == cur_context) {
             cur_context = 'list';
         }
@@ -98,7 +109,10 @@ $(function() {
         // Generate appropriate keypress id, to be searched in shortcut
         // config array for appropriate action. If partial keypress is detected
         // (i.e. ctrl key only, before final character key is pressed), ignore it.
-        keypress_id = ks_ng_generate_keypress_id(e);
+        // (only autodetermine if not passed as an function argument)
+        if (null == keypress_id) {
+            keypress_id = ks_ng_generate_keypress_id(e);
+        }
         if (null == keypress_id) {
 //ks_ng_debug('partial keypress, ignoring');
             return true;
@@ -107,14 +121,19 @@ $(function() {
 
         // Do not enable shortcuts if current focus is on any form element (input, textarea)
         // that expects typed input. Exception is ctrl+enter shortcut for sending email.
-        if ($("*:focus").is("textarea, input")) {
-            if ($("*:focus").is("textarea") && 'ctrl enter' == keypress_id) {
-                // Continue processing below
-            } else {
-                return true;
+        // (skip this check if explicitly told so by function argument)
+        if (true == check_if_appropriate_situation) {
+            if ($("*:focus").is("textarea, input")) {
+                if ($("*:focus").is("textarea") && 'ctrl enter' == keypress_id) {
+                    // Continue processing below
+                } else {
+                    return true;
+                }
             }
         }
-
+//ks_ng_debug('ctxt: ' + cur_context);
+//ks_ng_debug('k_id: ' + keypress_id);
+//ks_ng_debug('chk:  ' + check_if_appropriate_situation);
 
 
         // Find appropriate action
@@ -129,7 +148,7 @@ $(function() {
 
 
         // Execute found action
-        return ks_ng_exec_action(action_id, cur_context, rcmailobj, windowobj);
+        return ks_ng_exec_action(action_id, cur_context, rcmailobj, windowobj, action_args);
     }
 });
 
@@ -358,9 +377,10 @@ function ks_ng_find_action_id (search_keypress_id, search_context, config)
  * @param    string        Action ID to execute
  * @param    string        Context ID
  * @param    array         rcmail instance
+ * @param    Object        action arguments (if specific args need to be passed to action)
  * @return   ?
  */
-function ks_ng_exec_action (action_id, context, rcmailobj, windowobj)
+function ks_ng_exec_action (action_id, context, rcmailobj, windowobj, action_args)
 {
     // ks_ng_actions is defined in another file:   ./keyboard_shortcuts_actions.js
 
@@ -371,7 +391,7 @@ function ks_ng_exec_action (action_id, context, rcmailobj, windowobj)
     }
 
     // Call that method
-    return ks_ng_actions[action_id](context, rcmailobj, windowobj);
+    return ks_ng_actions[action_id](context, rcmailobj, windowobj, action_args);
 }
 
 

@@ -174,15 +174,21 @@ ks_ng_actions.message_reply_all = function (context, rcmailobj, windowobj)
 
 
 
-ks_ng_actions.message_send = function (context, rcmailobj, windowobj)
+ks_ng_actions.message_send = function (context, rcmailobj, windowobj, args={})
 {
-    // Fuse: do not act/send email if focus is not on compose body
-    if (!$("*:focus").is("#composebody")) {
-      return true;
+    if (
+        // Focus must be on compose body (txt)...
+        ($("*:focus").is("#composebody"))
+        ||
+        // ... or in iframe tinymce editor (html)
+        (args.hasOwnProperty('is_html_compose') && (true == args.is_html_compose))
+    ) {
+        $('.button.send').click();
+        return false;
     }
 
-    $('.button.send').click();
-    return false;
+    // Not appropriate to run otherwise
+    return true;
 }
 
 
