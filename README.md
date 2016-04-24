@@ -41,6 +41,7 @@ array(
     //...
 );
 ```
+- add OS-native shortcuts (different for Mac OS X for example) - if adding them will suffice, excellent. Otherwise refactoring will be needed.
 
 
 
