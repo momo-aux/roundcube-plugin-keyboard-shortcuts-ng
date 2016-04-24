@@ -41,59 +41,124 @@ $config['keyboard_shortcuts_ng'] = array();
  * - 'compose'
  *
  *
- * Configuration examples:
- *
- *     Valid in one context only:
- *
- *         'message_send'                   => array('shortcut' => 'ctrl enter', 'context' => array('compose' => array())),
- *
- *
- *     Valid in multiple (but not all) contexts:
- *
- *         'messagelist_select_all_on_page' => array('shortcut' => 'ctrl a',     'context' => array('list'    => array(), 'preview' => array())),
- *
- *
- *     Valid in all contexts - DO NOT USE, weird things start to happen (unable to type in compose window and such):
- *
- *         'searchbox_focus'                => array('shortcut' => 'ctrl s',     'context' => NULL),
- *
- *
- *     'shortcut' key can be either string or array of strings:
- *
- *          'shortcut' => 'ctrl s',
- *          'shortcut' => array('ctrl s', 'alt s'),
- *
- *
+ * Configuration entry keys description:
+ * - shortcut:    key combination specification (string for single, array for multiple)
+ * - context:     valid contexts for this key combo (string for single, array for multiple)
+ * - action:      action ID for this key combo (directly translates to function name in keyboard_shortcuts_ng_actions.js)
+ * TODO
+ * - action_args: arguments to pass to given action (implementation pending)
  */
+
+// Tmp helpers for more compact configuration specification below:
+$_ctxLP  = array('list', 'preview');
+$_ctxLPS = array('list', 'preview', 'show');
+$_ctxC   = 'compose';
+
 $config['keyboard_shortcuts_ng']['association_map'] = array(
     // General actions
-    'ks_ng_help_display'             => array('shortcut' => 'shift ?',      'context' => array('list'=>true, 'preview'=>true)),
-    'checkmail'                      => array('shortcut' => 'u',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    'searchbox_focus'                => array('shortcut' => 's',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    // TODO also bind shift+k to searchbox (similar to browser's ctrl+k)
+    array(
+        'shortcut' => array('f1', 'shift ?'),
+            'context' => $_ctxLP,
+                'action' => 'ks_ng_help_display',
+    ),
+    array(
+        'shortcut' => 'ctrl r',
+            'context' => $_ctxLPS,
+                'action' => 'checkmail',
+    ),
+    array(
+        'shortcut' => array('ctrl f', 'ctrl k'),
+            'context' => $_ctxLPS,
+                'action' => 'searchbox_focus',
+    ),
 
-    // List actions
-    'messagelist_select_all_on_page' => array('shortcut' => 'shift a',      'context' => array('list'=>true, 'preview'=>true)),
-    'messagelist_select_all'         => array('shortcut' => 'ctrl shift a', 'context' => array('list'=>true, 'preview'=>true)),
-    'previewpane_toggle_visibility'  => array('shortcut' => 't',            'context' => array('list'=>true, 'preview'=>true)),
-    'threads_collapse_all'           => array('shortcut' => 'shift c',      'context' => array('list'=>true, 'preview'=>true)),
-    'threads_expand_all'             => array('shortcut' => 'shift e',      'context' => array('list'=>true, 'preview'=>true)),
-    'threads_expand_unread'          => array('shortcut' => 'shift u',      'context' => array('list'=>true, 'preview'=>true)),
+    // Messagelist actions
+    array(
+        'shortcut' => 'ctrl a',
+            'context' => $_ctxLP,
+                'action' => 'messagelist_select_all_on_page',
+    ),
+    array(
+        'shortcut' => 'ctrl shift a',
+            'context' => $_ctxLP,
+                'action' => 'messagelist_select_all',
+    ),
+    array(
+        'shortcut' => 't',
+            'context' => $_ctxLP,
+                'action' => 'previewpane_toggle_visibility',
+    ),
+    array(
+        'shortcut' => 'shift c',
+            'context' => $_ctxLP,
+                'action' => 'threads_collapse_all',
+    ),
+    array(
+        'shortcut' => 'shift e',
+            'context' => $_ctxLP,
+                'action' => 'threads_expand_all',
+    ),
+    array(
+        'shortcut' => 'shift u',
+            'context' => $_ctxLP,
+                'action' => 'threads_expand_unread',
+    ),
 
     // Message actions
-    'message_compose'                => array('shortcut' => 'c',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    'message_forward'                => array('shortcut' => 'f',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    'message_print'                  => array('shortcut' => 'p',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    'message_reply'                  => array('shortcut' => 'r',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    'message_reply_all'              => array('shortcut' => 'shift r',      'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
+    array(
+        'shortcut' => 'c',
+            'context' => $_ctxLPS,
+                'action' => 'message_compose',
+    ),
+    array(
+        'shortcut' => 'f',
+            'context' => $_ctxLPS,
+                'action' => 'message_forward',
+    ),
+    array(
+        'shortcut' => 'ctrl p',
+            'context' => $_ctxLPS,
+                'action' => 'message_print',
+    ),
+    array(
+        'shortcut' => 'r',
+            'context' => $_ctxLPS,
+                'action' => 'message_reply',
+    ),
+    array(
+        'shortcut' => 'shift r',
+            'context' => $_ctxLPS,
+                'action' => 'message_reply_all',
+    ),
 
     // This one is hardcoded for HTML message composer - iframe/tinymce limitation
-    'message_send'                   => array('shortcut' => 'ctrl enter',   'context' => array('compose' => true)),
-    'message_toggle_flag_read'       => array('shortcut' => 'm',            'context' => array('list'=>true, 'preview'=>true)),
-    'message_view_next'              => array('shortcut' => 'k',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    'message_view_prev'              => array('shortcut' => 'j',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
-    // Dangerous, therefore disabled by default
-    // 'message_delete'                 => array('shortcut' => 'd',            'context' => array('list'=>true, 'preview'=>true, 'show'=>true)),
+    array(
+        'shortcut' => 'ctrl enter',
+            'context' => $_ctxC,
+                'action' => 'message_send',
+    ),
+
+    array(
+        'shortcut' => 'm',
+            'context' => $_ctxLP,
+                'action' => 'message_toggle_flag_read',
+    ),
+    array(
+        'shortcut' => 'k',
+            'context' => $_ctxLPS,
+                'action' => 'message_view_next',
+    ),
+    array(
+        'shortcut' => 'j',
+            'context' => $_ctxLPS,
+                'action' => 'message_view_prev',
+    ),
+
+    array(
+        'shortcut' => 'delete',
+            'context' => $_ctxLPS,
+                'action' => 'message_delete',
+    ),
 );
 
 

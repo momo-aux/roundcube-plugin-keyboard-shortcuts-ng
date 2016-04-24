@@ -50,10 +50,21 @@ class keyboard_shortcuts_ng extends rcube_plugin
 
 
     /*
+     * Association hash
+     *
+     * Optimized config hash, for faster lookups on frontend
+     *
+     * See config/defaults.inc.php for details
+     */
+    protected $association_hash = NULL;
+
+
+
+    /*
      * Initialization
      *
      */
-    function init()
+    public function init ()
     {
         // This plugin is required
         $this->require_plugin('jqueryui');
@@ -94,9 +105,12 @@ class keyboard_shortcuts_ng extends rcube_plugin
             }
         }
 
+        // Now that config is complete, generate hash
+        $this->regenerate_association_hash();
+
         // Pass configuration to frontend
         $this->rc->output->set_env('ks_ng_supported_contexts', $this->supported_contexts);
-        $this->rc->output->set_env('ks_ng_config',   $this->association_map);
+        $this->rc->output->set_env('ks_ng_association_hash',   $this->association_hash);
 
         // Only load this plugin once user is logged in and when newuserdialog is complete
         if ($_SESSION['username'] && empty($_SESSION['plugin.newuserdialog'])) {
@@ -107,5 +121,36 @@ class keyboard_shortcuts_ng extends rcube_plugin
 
         // Enable translations
         $this->add_texts('localization', true);
+    }
+
+
+
+
+    /*
+     * Regenerate association hash from configuration
+     *
+     * Builds array/hash for one-dimensional searching.
+     */
+    public function regenerate_association_hash ()
+    {
+        $newAssocHash = array();
+
+        foreach ($this->association_map as $action => $aData) {
+            $shortcuts   = (is_string($aData['shortcut']) ? array($aData['shortcut']) : $aData['shortcut']);
+            $contexts    = (is_string($aData['context'])  ? array($aData['context'])  : $aData['context']);
+            $action_data = array(
+                'action_id'   => $aData['action'],
+                'action_args' => (isset($aData['action_args']) ? $aData['action_args']  : array()),
+            );
+
+            foreach ($shortcuts as $shortcut) {
+                foreach ($contexts as $context) {
+                    $hashEntryKey = "$shortcut ($context)";
+                    $newAssocHash[$hashEntryKey] = $action_data;
+                }
+            }
+        }
+
+        $this->association_hash = $newAssocHash;
     }
 }

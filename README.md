@@ -26,21 +26,8 @@ Files in plugin/keyboard_shortcuts_ng/config/ are ignored.
 ## TODO
 
 Details that need attention:
-- add support for multiple shortcuts to single action
 - when previewpane is empty, 'c' for compose shortcut does not work - 404 because of skins/theme/... src= value
 - fix help output to display actual associations
-- optimize execution: convert config array into some other format that single
-    array/object-property lookup will determine if any action is associated
-    with current keypress.
-    Example implementation idea:
-```php
-array(
-    "(compose) ctrl enter" => array('action' => "message_send"),
-    "(list) s"    => array('action' => "searchbox_focus"),
-    "(preview) s" => array('action' => "searchbox_focus"),
-    //...
-);
-```
 - add OS-native shortcuts (different for Mac OS X for example) - if adding them will suffice, excellent. Otherwise refactoring will be needed.
 
 

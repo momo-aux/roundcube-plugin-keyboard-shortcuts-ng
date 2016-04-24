@@ -137,8 +137,8 @@ $(function() {
 
 
         // Find appropriate action
-        config = rcmail.env.ks_ng_config;
-        action_id = ks_ng_find_action_id(keypress_id, cur_context, config);
+        ks_ng_association_hash = rcmail.env.ks_ng_association_hash;
+        action_id = ks_ng_find_action_id(keypress_id, cur_context, ks_ng_association_hash);
         if (null == action_id) {
 //ks_ng_debug('no action defined for this keypress_id: ' + keypress_id);
             // Return true so that the event processing continues
@@ -284,85 +284,19 @@ function ks_ng_generate_keypress_id (e)
  *
  * @param    string        Keypress ID string
  * @param    string        Context ID
- * @param    array         Configuration array
+ * @param    array         Configuration hash (array of 'keypress_id (context)' => array('action' => 'actionName') data)
  * @return   string|null   Action ID, or not
  */
-function ks_ng_find_action_id (search_keypress_id, search_context, config)
+function ks_ng_find_action_id (search_keypress_id, search_context, association_hash)
 {
-    // Loop 1: search for context-specific dedicated shortcuts
-    for (var action_id in config) {
-        action_data = config[action_id];
-
-        if (!action_data.hasOwnProperty('context')) {
-            continue;
-        }
-
-        if (action_data.context.hasOwnProperty(search_context)) {
-            if (
-                action_data.context[search_context].hasOwnProperty('shortcut')
-                &&
-                action_data.context[search_context].shortcut == search_keypress_id
-            ) {
-//ks_ng_debug('search loop 1: found matching context-specific shortcut, action: ' + action_id);
-                return action_id;
-            }
-        }
+    search_hash_key = search_keypress_id + ' (' + search_context + ')'
+    if (association_hash.hasOwnProperty(search_hash_key)) {
+        action_id = association_hash[search_hash_key].action_id;
+//ks_ng_debug('Found action: ' + action_id);
+        return action_id;
     }
 
-
-    // Loop 2: search for global matching shortcut with specific context defined
-    for (var action_id in config) {
-        action_data = config[action_id];
-
-        if (!action_data.hasOwnProperty('shortcut')) {
-            continue;
-        }
-
-        if (action_data.shortcut != search_keypress_id) {
-            continue;
-        }
-
-        if (!action_data.hasOwnProperty('context')) {
-            continue;
-        }
-
-        // Check if context is defined, and that context does not have unmatching shortcut
-        if (action_data.context.hasOwnProperty(search_context)) {
-            if (
-                action_data.context[search_context].hasOwnProperty('shortcut')
-                &&
-                action_data.context[search_context].shortcut != search_keypress_id
-            ) {
-                continue;
-            } else {
-//ks_ng_debug('search loop 2: found matching global shortcut with specific context definition without separate context-specific shortcut definition, action: ' + action_id);
-                // We have a match
-                return action_id;
-            }
-        }
-    }
-
-
-    // Loop 1: search for context-specific dedicated shortcuts
-    for (var action_id in config) {
-        action_data = config[action_id];
-
-        if (!action_data.hasOwnProperty('shortcut')) {
-            continue;
-        }
-
-        if (action_data.shortcut != search_keypress_id) {
-            continue;
-        }
-
-        if (!action_data.hasOwnProperty('context')) {
-//ks_ng_debug('search loop 3: found matching global shortcut without context definitions, action: ' + action_id);
-            // We have a match
-            return action_id;
-        }
-    }
-
-
+//ks_ng_debug('No keyboard association defined for: ' + search_hash_key);
     // Shortcut was not found
     return null;
 }
