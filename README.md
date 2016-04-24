@@ -29,6 +29,7 @@ Details that need attention:
 - when previewpane is empty, 'c' for compose shortcut does not work - 404 because of skins/theme/... src= value
 - fix help output to display actual associations
 - add OS-native shortcuts (different for Mac OS X for example) - if adding them will suffice, excellent. Otherwise refactoring will be needed.
+- move association_hash computation to frontend/JS
 
 
 
