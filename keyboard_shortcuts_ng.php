@@ -18,6 +18,13 @@ class keyboard_shortcuts_ng extends rcube_plugin
 
 
     /*
+     * RC instance
+     */
+    protected $rc = NULL;
+
+
+
+    /*
      * List of contexts supported
      *
      * Mainly here to protect the rest of roundcube from unexpected behaviour,
@@ -108,12 +115,14 @@ class keyboard_shortcuts_ng extends rcube_plugin
 
     function init()
     {
+        // Get RC instance
+        $this->rc = rcmail::get_instance();
+
         // This plugin is required
         $this->require_plugin('jqueryui');
 
-        // Pass configuration to JS/frontend
-        $rcmail->output->set_env('ks_ng_supported_contexts', $this->supported_contexts);
-        $rcmail->output->set_env('ks_ng_config',   $this->config);
+        $this->rc->output->set_env('ks_ng_supported_contexts', $this->supported_contexts);
+        $this->rc->output->set_env('ks_ng_config',   $this->config);
 
         // Only load this plugin once user is logged in and when newuserdialog is complete
         if ($_SESSION['username'] && empty($_SESSION['plugin.newuserdialog'])) {
