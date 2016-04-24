@@ -122,11 +122,20 @@ ks_ng_actions.message_compose = function (context, rcmailobj, windowobj)
 
 
 
-ks_ng_actions.message_delete = function (context, rcmailobj, windowobj)
-{
-    rcmailobj.command('delete');
-    return false;
-}
+// Already implemented in Roudcube itself (key 'delete')
+//ks_ng_actions.message_delete_ask = function (context, rcmailobj, windowobj)
+//{
+//    if (windowobj.confirm("Are you sure?")) {
+//        rcmailobj.command('delete');
+//    }
+//    return false;
+//}
+
+//ks_ng_actions.message_delete_noask = function (context, rcmailobj, windowobj)
+//{
+//    rcmailobj.command('delete');
+//    return false;
+//}
 
 
 

@@ -154,11 +154,19 @@ $config['keyboard_shortcuts_ng']['association_map'] = array(
                 'action' => 'message_view_prev',
     ),
 
-    array(
-        'shortcut' => 'delete',
-            'context' => $_ctxLPS,
-                'action' => 'message_delete',
-    ),
+/*
+ * // These are already implemented in Roundcube itself
+ *    array(
+ *        'shortcut' => 'delete',
+ *            'context' => $_ctxLPS,
+ *                'action' => 'message_delete_ask',
+ *    ),
+ *    array(
+ *        'shortcut' => 'shift delete',
+ *            'context' => $_ctxLPS,
+ *                'action' => 'message_delete_noask',
+ *    ),
+ */
 );
 
 
