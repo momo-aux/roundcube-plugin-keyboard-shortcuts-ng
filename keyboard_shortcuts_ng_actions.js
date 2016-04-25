@@ -57,6 +57,60 @@ ks_ng_actions.searchbox_focus = function (context, rcmailobj, windowobj)
  *
  *******************************************************************************
  */
+ks_ng_actions.mailboxlist_up = function (context, rcmailobj, windowobj)
+{
+    curFolder  = windowobj.$('#mailboxlist').find('.selected');
+    prevFolder = curFolder.prev();
+
+    // If this keypress has been done on first or last folder, stop processing
+    // Timer must not be cleaned!
+    if (0 == prevFolder.length) {
+        return false;
+    }
+
+    // If this is repeated keystroke, cancel previous load timer
+    if (this.mailbox_select_timer) {
+        clearTimeout(this.mailbox_select_timer);
+    }
+
+    // Change selected folder
+    prevFolder.click();
+
+    // Click after timeout (ignore repeated keystrokes)
+    link = prevFolder.find('a');
+    this.mailbox_select_timer = windowobj.setTimeout(function(linkObj){ linkObj.click(); }, 300, link);
+
+    return false;
+}
+
+ks_ng_actions.mailboxlist_down = function (context, rcmailobj, windowobj)
+{
+    curFolder  = windowobj.$('#mailboxlist').find('.selected');
+    nextFolder = curFolder.next();
+
+    // If this keypress has been done on first or last folder, stop processing
+    // Timer must not be cleaned!
+    if (0 == nextFolder.length) {
+        return false;
+    }
+
+    // If this is repeated keystroke, cancel previous load timer
+    if (this.mailbox_select_timer) {
+        clearTimeout(this.mailbox_select_timer);
+    }
+
+    // Change selected folder
+    nextFolder.click();
+
+    // Click after timeout (ignore repeated keystrokes)
+    link = nextFolder.find('a');
+    this.mailbox_select_timer = windowobj.setTimeout(function(linkObj){ linkObj.click(); }, 300, link);
+
+    return false;
+}
+
+
+
 ks_ng_actions.messagelist_select_all_on_page = function (context, rcmailobj, windowobj)
 {
     rcmailobj.command('select-all', 'page');

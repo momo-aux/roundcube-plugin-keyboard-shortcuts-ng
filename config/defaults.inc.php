@@ -72,6 +72,20 @@ $config['keyboard_shortcuts_ng']['association_map'] = array(
                 'action' => 'searchbox_focus',
     ),
 
+
+    // Mailbox/Folder list actions
+    array(
+        'shortcut' => 'q',
+            'context' => $_ctxLP,
+                'action' => 'mailboxlist_up',
+    ),
+    array(
+        'shortcut' => 'a',
+            'context' => $_ctxLP,
+                'action' => 'mailboxlist_down',
+    ),
+
+
     // Messagelist actions
     array(
         'shortcut' => 'ctrl a',
