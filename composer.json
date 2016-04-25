@@ -1,7 +1,7 @@
 {
     "name": "teon/keyboard_shortcuts_ng",
     "type": "roundcube-plugin",
-    "description": "Configurable keyboard shortcuts",
+    "description": "Ready to use and configurable keyboard shortcuts. Supports OS-native variations, contains all bugfixes of original 'keyboard_shortcuts' plugin.",
     "keywords": [
         "keyboard",
         "shortcut",
