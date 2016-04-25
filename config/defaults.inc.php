@@ -108,7 +108,7 @@ $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_
 
 
 $_ksDef = array(
-        'shortcut' => array('s', 'ctrl f', 'ctrl k'),
+        'shortcut' => array('ctrl s', 'ctrl f', 'ctrl k'),
             'context' => $_ctxLPS,
                 'action' => 'searchbox_focus',
 );
@@ -207,6 +207,37 @@ $_ksDef = array(
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 //$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef;
 $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = $_ksDef;
+
+
+
+
+
+/*
+ * *****************************************************************************
+ * Preview actions
+ * *****************************************************************************
+ */
+$_ksDef = array(
+        'shortcut' => 'w',
+            'context' => $_ctxLP,
+                'action' => 'preview_scroll_up',
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+//$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef;
+//$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = $_ksDef;
+
+
+
+$_ksDef = array(
+        'shortcut' => 's',
+            'context' => $_ctxLP,
+                'action' => 'preview_scroll_down',
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+//$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef;
+//$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = $_ksDef;
+
+
 
 
 

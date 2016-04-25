@@ -164,6 +164,35 @@ ks_ng_actions.threads_expand_unread = function (context, rcmailobj, windowobj)
 /*
  *******************************************************************************
  *
+ * Preview actions
+ *
+ *******************************************************************************
+ */
+ks_ng_actions.preview_scroll_up = function (context, rcmailobj, windowobj)
+{
+    iframeCnt = $('#messagecontframe').contents();
+    curPos    = iframeCnt.scrollTop();
+    iframeCnt.scrollTop(curPos - 50);
+
+    return false;
+}
+
+
+
+ks_ng_actions.preview_scroll_down = function (context, rcmailobj, windowobj)
+{
+    iframeCnt = $('#messagecontframe').contents();
+    curPos    = iframeCnt.scrollTop();
+    iframeCnt.scrollTop(curPos + 50);
+
+    return false;
+}
+
+
+
+/*
+ *******************************************************************************
+ *
  * Message actions
  *
  *******************************************************************************
