@@ -30,7 +30,7 @@ $config['keyboard_shortcuts_ng'] = array();
  */
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome_enabled']        = true;  // Recommended by author of this plugin
 $config['keyboard_shortcuts_ng']['association_map_os_native_linux_enabled']   = true;  // Linux native shortcuts
-$config['keyboard_shortcuts_ng']['association_map_os_native_macosx_enabled']  = true;  // TODO
+$config['keyboard_shortcuts_ng']['association_map_os_native_macosx_enabled']  = false; // TODO
 $config['keyboard_shortcuts_ng']['association_map_os_native_windows_enabled'] = false; // TODO
 $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin_enabled']  = false; // Mimic behaviour or RC plugin 'keyboard_shortcuts'
 
@@ -91,8 +91,8 @@ $_ksDef = array(
                 'action' => 'ks_ng_help_display',
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
-$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = array_merge($_ksDef + array('shortcut'=>'f1'));
-$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef + array('shortcut'=>'?'));
+$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = array_merge($_ksDef, array('shortcut'=>'f1'));
+$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef, array('shortcut'=>'?'));
 
 
 
@@ -102,8 +102,8 @@ $_ksDef = array(
                 'action' => 'checkmail',
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
-$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = array_merge($_ksDef + array('shortcut'=>'ctrl r'));
-$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef + array('shortcut'=>'u'));
+$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = array_merge($_ksDef, array('shortcut'=>'ctrl r'));
+$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef, array('shortcut'=>'u'));
 
 
 
@@ -113,8 +113,8 @@ $_ksDef = array(
                 'action' => 'searchbox_focus',
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
-$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = array_merge($_ksDef + array('shortcut'=>'ctrl f'));
-$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef + array('shortcut'=>'s'));
+$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = array_merge($_ksDef, array('shortcut'=>'ctrl f'));
+$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef, array('shortcut'=>'s'));
 
 
 
@@ -149,7 +149,7 @@ $_ksDef = array(
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 $config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef;
-$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef + array('shortcut'=>array('a', 'shift a')));
+$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef, array('shortcut'=>array('a', 'shift a')));
 
 
 
@@ -242,7 +242,7 @@ $_ksDef = array(
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 $config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef;
-$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef + array('shortcut'=>'p'));
+$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef, array('shortcut'=>'p'));
 
 
 
@@ -335,7 +335,7 @@ $_ksDef = array(
 );
 //$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef; // These are already implemented in Roundcube itself
 //$config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef; // These are already implemented in Roundcube itself
-$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef + array('shortcut'=>'d'));
+$config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = array_merge($_ksDef, array('shortcut'=>'d'));
 
 
 
