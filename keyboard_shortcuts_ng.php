@@ -72,40 +72,42 @@ class keyboard_shortcuts_ng extends rcube_plugin
         // Get RC instance
         $this->rc = rcmail::get_instance();
 
-        // Read configuration defaults
-        $configAll             = require __DIR__ .'/config/defaults.inc.php';
-        $configPlugin          = $configAll['keyboard_shortcuts_ng'];
-        $this->association_map = $configPlugin['association_map'];
+        // Read configuration defaults, merge in local overrides
+        $configAll         = require __DIR__ .'/config/defaults.inc.php';
+        $configPlugin      = $configAll['keyboard_shortcuts_ng'];
+        $configPluginLocal = $this->rc->config->get('keyboard_shortcuts_ng', array());
+        $configPlugin      = array_merge($configPlugin, $configPluginLocal);
 
-        // Merge local configuration overrides
-        $configPluginLocal = $this->rc->config->get('keyboard_shortcuts_ng', NULL);
-        if (NULL != $configPluginLocal) {
-            if (isset($configPluginLocal['association_map'])) {
-                // We have local overrides, ql
-
-                // Get merge strategy
-                if (isset($configPluginLocal['association_map_merge_strategy'])) {
-                    $configMergeStrategy = $configPluginLocal['association_map_merge_strategy'];
-                } else {
-                    $configMergeStrategy = $configPlugin['association_map_merge_strategy'];
-                }
-
-                switch ($configMergeStrategy) {
-                    case "merge":
-                        $this->association_map = array_merge($this->association_map, $configPluginLocal['association_map']);
-                        break;
-
-                    case "replace":
-                        $this->association_map = $configPluginLocal['association_map'];
-                        break;
-
-                    default:
-                        throw new Exception("Unsupported association map merge strategy: $configMergeStrategy");
-                }
+        // Merge enabled built-it association maps
+        $this->association_map = array();
+        foreach ($configPlugin as $configKey => $configVal) {
+            if (!preg_match('/^(association_map_.+)_enabled$/', $configKey, $m)) {
+                continue;
+            }
+            $mapId = $m[1];
+            if (true == $configVal) {
+                $this->association_map = array_merge($this->association_map, $configPlugin[$mapId]);
             }
         }
 
-        // Now that config is complete, generate hash
+        // Merge local association map overrides
+        if (isset($configPlugin['association_map'])) {
+
+            switch ($configPlugin['association_map_merge_strategy']) {
+                case "merge":
+                    $this->association_map = array_merge($this->association_map, $configPluginLocal['association_map']);
+                    break;
+
+                case "replace":
+                    $this->association_map = $configPluginLocal['association_map'];
+                    break;
+
+                default:
+                    throw new Exception("Unsupported association map merge strategy: $configMergeStrategy");
+            }
+        }
+
+        // Now that config is complete, generate association hash
         $this->regenerate_association_hash();
 
         // Pass configuration to frontend

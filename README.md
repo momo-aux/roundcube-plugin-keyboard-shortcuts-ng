@@ -7,6 +7,13 @@ Supports _almost all_ possible keyboard shortcuts (any combination of alt, ctrl,
 meta and shift keys), and all of character, number, punctuation, direction, F1-F12
 keys with addition of backspace and delete key + ctrl+enter for send mail.
 
+Initial sets of keyboard shortcuts are ready to be used:
+- ng_awesome - default association map for this plugin, enabled by default
+- os_native_linux
+- os_native_macosx (TODO)
+- os_native_windows (TODO)
+- compat_rc_plugin - mimics behavour of [keyboard_shortcuts](https://github.com/corbosman/keyboard_shortcuts) plugin
+
 
 
 ## Installation
@@ -18,17 +25,16 @@ Like any normal Roundcube plugin. Use composer.json.
 ## Configuration
 
 See [config/defaults.inc.php](config/defaults.inc.php) for details.
-Local overrides are done _in main Roundcube configuration file_.
-Files in plugin/keyboard_shortcuts_ng/config/ are ignored.
+Local overrides are done _in your main Roundcube configuration file_.
+Files you create in plugin/keyboard_shortcuts_ng/config/ are ignored.
 
 
 
 ## TODO
 
-Details that need attention:
+Details that need attention of developers:
 - when previewpane is empty, 'c' for compose shortcut does not work - 404 because of skins/theme/... src= value
 - fix help output to display actual associations
-- add OS-native shortcuts (different for Mac OS X for example) - if adding them will suffice, excellent. Otherwise refactoring will be needed.
 - move association_hash computation to frontend/JS
 
 
