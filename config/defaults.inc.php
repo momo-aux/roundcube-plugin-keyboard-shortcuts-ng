@@ -69,6 +69,7 @@ $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin_enabled']  = 
  */
 
 // Tmp helpers for more compact configuration specification below:
+$_ctxAll = array('compose', 'list', 'preview', 'show');
 $_ctxLP  = array('list', 'preview');
 $_ctxLPS = array('list', 'preview', 'show');
 $_ctxC   = 'compose';
@@ -85,6 +86,36 @@ $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin']  = array();
 /*
  * General actions
  */
+$_ksDef = array(
+        'shortcut' => array('ctrl 1'),
+            'context' => $_ctxAll,
+                'action' => 'task_switch_mail',
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+
+$_ksDef = array(
+        'shortcut' => array('ctrl 2'),
+            'context' => $_ctxAll,
+                'action' => 'task_switch_addressbook',
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+
+$_ksDef = array(
+        'shortcut' => array('ctrl 9'),
+            'context' => $_ctxAll,
+                'action' => 'task_switch_settings',
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+
+$_ksDef = array(
+        'shortcut' => array('ctrl 0'),
+            'context' => $_ctxAll,
+                'action' => 'task_switch_logout',
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+
+
+
 $_ksDef = array(
         'shortcut' => array('shift ?'),
             'context' => $_ctxLP,
