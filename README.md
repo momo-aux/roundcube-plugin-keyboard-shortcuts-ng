@@ -16,6 +16,37 @@ Initial sets of keyboard shortcuts are ready to be used:
 
 
 
+## ng_awesome keyboard map - your participation is awesome!
+
+*ng_awesome* keyboard shortcut association map is destined to be the best
+available keyboard map ever! But, to get there, your suggestions,
+arguments and code are required.
+
+The idea behind *ng_awesome* is (for now) the following:
+- use as many os-native shortcuts as possible, because user is already used to those,
+- make non-os-native shortcuts intuitive,
+- make reading mail possible with as little hand movement as possible,
+- do not make it dangerous (letter 'd' for deleting email, for example, when 'delete' key is already there).
+
+The initial idea (rought, untested!) for mail reading is this:
+- 'q' and 'a' is for selecting mailboxes/folders,
+- 'up' and 'down' keys are for selecting email (default),
+- 'space' selects email and opens it in preview pane (default),
+- 'w' and 'a' keys are for scrolling preview pane up and down
+
+Now, about shortcuts above: I would like to replace up/down with 'p'/'l'
+combination, and use up/down keys for preview pane scrolling - placement
+of keys aligns more naturally with on-screen content positions.
+Another comment is that space key is not natural for opening email in preview
+pane, if preview pane is already visible. I generally tend towards hitting enter
+and expecting email to open in preview pane instead in new window/refreshed
+window in email-view mode.
+
+Anyhow: issues, comments and pull requests are welcome. Beware that pull requests will
+probably be integrated very slowly, as additional comments will be waited for.
+
+
+
 ## Installation
 
 Like any normal Roundcube plugin. Use composer.json.
