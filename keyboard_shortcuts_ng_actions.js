@@ -65,33 +65,9 @@ ks_ng_actions.searchbox_focus = function (context, rcmailobj, windowobj)
 
 
 
-ks_ng_actions.task_switch_addressbook = function (context, rcmailobj, windowobj)
+ks_ng_actions.task_switch = function (context, rcmailobj, windowobj, args)
 {
-    rcmailobj.command('switch-task','addressbook');
-    return false;
-}
-
-
-
-ks_ng_actions.task_switch_logout = function (context, rcmailobj, windowobj)
-{
-    rcmailobj.command('switch-task','logout');
-    return false;
-}
-
-
-
-ks_ng_actions.task_switch_mail = function (context, rcmailobj, windowobj)
-{
-    rcmailobj.command('switch-task','mail');
-    return false;
-}
-
-
-
-ks_ng_actions.task_switch_settings = function (context, rcmailobj, windowobj)
-{
-    rcmailobj.command('switch-task','settings');
+    rcmailobj.command('switch-task', args.task);
     return false;
 }
 

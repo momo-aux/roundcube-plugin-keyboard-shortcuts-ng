@@ -158,17 +158,20 @@ $(function() {
 
         // Find appropriate action
         ks_ng_association_hash = rcmail.env.ks_ng_association_hash;
-        action_id = ks_ng_find_action_id(keypress_id, cur_context, ks_ng_association_hash);
-        if (null == action_id) {
+        action_data = ks_ng_find_action(keypress_id, cur_context, ks_ng_association_hash);
+        if (null == action_data) {
 //ks_ng_debug('no action defined for this keypress_id: ' + keypress_id);
             // Return true so that the event processing continues
             return true;
         }
-//ks_ng_debug('matching action found: ' + action_id);
+//ks_ng_debug('matching action found: ' + action_data.id);
+
+        // Merge action arguments - the ones passed by JS override those provided by PHP/associative_hash
+        action_args_to_pass = $.extend({}, action_args, action_data.args);
 
 
         // Execute found action
-        return ks_ng_exec_action(action_id, cur_context, rcmailobj, windowobj, action_args);
+        return ks_ng_exec_action(action_data.id, cur_context, rcmailobj, windowobj, action_args_to_pass);
     }
 });
 
@@ -307,13 +310,16 @@ function ks_ng_generate_keypress_id (e)
  * @param    array         Configuration hash (array of 'keypress_id (context)' => array('action' => 'actionName') data)
  * @return   string|null   Action ID, or not
  */
-function ks_ng_find_action_id (search_keypress_id, search_context, association_hash)
+function ks_ng_find_action (search_keypress_id, search_context, association_hash)
 {
     search_hash_key = search_keypress_id + ' (' + search_context + ')'
     if (association_hash.hasOwnProperty(search_hash_key)) {
-        action_id = association_hash[search_hash_key].action_id;
+        action_data = {
+            id:   association_hash[search_hash_key].action_id,
+            args: association_hash[search_hash_key].action_args,
+        };
 //ks_ng_debug('Found action: ' + action_id);
-        return action_id;
+        return action_data;
     }
 
 //ks_ng_debug('No keyboard association defined for: ' + search_hash_key);

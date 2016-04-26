@@ -89,28 +89,32 @@ $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin']  = array();
 $_ksDef = array(
         'shortcut' => array('ctrl 1'),
             'context' => $_ctxAll,
-                'action' => 'task_switch_mail',
+                'action' => 'task_switch',
+                    'action_args' => array('task' => 'mail'),
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 
 $_ksDef = array(
         'shortcut' => array('ctrl 2'),
             'context' => $_ctxAll,
-                'action' => 'task_switch_addressbook',
+                'action' => 'task_switch',
+                    'action_args' => array('task' => 'addressbook'),
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 
 $_ksDef = array(
         'shortcut' => array('ctrl 9'),
             'context' => $_ctxAll,
-                'action' => 'task_switch_settings',
+                'action' => 'task_switch',
+                    'action_args' => array('task' => 'settings'),
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 
 $_ksDef = array(
         'shortcut' => array('ctrl 0'),
             'context' => $_ctxAll,
-                'action' => 'task_switch_logout',
+                'action' => 'task_switch',
+                    'action_args' => array('task' => 'logout'),
 );
 $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
 
