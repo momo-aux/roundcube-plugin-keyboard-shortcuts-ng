@@ -37,17 +37,25 @@ $(function() {
 
 
     /**
-     * Workaround: when HTML message composing is in use, ctrl+enter shortcut does not work.
+     * Workaround: when HTML message composing is in use, ctrl+enter shortcut needs special handling
      *
-     * If we hit ctrl-enter, and we're composing, and we have focus (in the HTML editor iframe), then send email.
-     * Limitation is that it adds in a line from hitting enter, which is something tinymce seems to do.
+     * If we hit ctrl-enter, and we're composing, and we have focus (in the HTML
+     * editor iframe), then send email. The catch is to hook into TinyMCE event handlers,
+     * not into parent iframe.
      */
     $(window.setTimeout(function() {
-        $('#composebody_ifr').contents().keydown(function (e) {
+
+        // Capture TinyMCE keyboard events as first event handler
+        rcmail.editor.editor.on('keydown', function(e) {
+
             if (rcmail.env.action == 'compose' && (e.which == 13 || e.which == 10) && e.ctrlKey) {
                 return ks_ng_keypress_event_handler(e, 'compose', 'ctrl enter', false, {'is_html_compose':true});
+                // These are not needed if false is returned.
+                //e.preventDefault();
+                //e.stopPropagation();
             }
-        });
+        }, true);   // True to insert it at the beginning of event handling chain
+
     }, 1000));
 
 
