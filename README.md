@@ -46,6 +46,12 @@ This plugin came to life as an offspring of original
 joined by a series of merges of almost all unmerged changes throughout GitHub,
 fueled by major refactoring and implementation of configurable key associations.
 
+Remaining parts of keyboard_shortcuts are pending for replacement or rewrite:
+- help screen
+- .css file
+- content in localization/
+- content in skins/
+
 
 
 ## License

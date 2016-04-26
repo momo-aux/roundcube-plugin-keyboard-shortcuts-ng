@@ -1,4 +1,21 @@
 /**
+ * Roundcube plugin - Keyboard Shortcuts NG
+ *
+ * Configurable keyboard shortcuts for Roundcube Webmail
+ *
+ * @author Bostjan Skufca <bostjan {at} a2o.si>
+ * @author Teon d.o.o.
+ * @licence GNU AGPL
+ *
+ * Inspired by:
+ * - Patrik Kullman / Roland 'rosali' Liebl / Cor Bosman <roundcube@wa.ter.net>
+ * - https://github.com/corbosman/keyboard_shortcuts
+ * - https://plugins.roundcube.net/packages/cor/keyboard_shortcuts
+ */
+
+
+
+/**
  * Keyboard Shortcuts Actions container
  *
  * Object that contains all actions available to associate with keyboard shortcuts

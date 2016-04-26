@@ -2,9 +2,10 @@
 /**
  * Roundcube plugin - Keyboard Shortcuts NG
  *
- * Enables some common tasks to be executed with keyboard shortcuts
+ * Configurable keyboard shortcuts for Roundcube Webmail
  *
- * @author Bostjan Skufca
+ * @author Bostjan Skufca <bostjan {at} a2o.si>
+ * @author Teon d.o.o.
  * @licence GNU AGPL
  *
  * Inspired by:

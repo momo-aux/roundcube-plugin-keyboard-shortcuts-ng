@@ -1,9 +1,16 @@
-/*
- * Keyboard Shortcuts NG
+/**
+ * Roundcube plugin - Keyboard Shortcuts NG
  *
- * Configurable keyboard shortcuts Roundcube webmail plugin
+ * Configurable keyboard shortcuts for Roundcube Webmail
  *
- * TODO license
+ * @author Bostjan Skufca <bostjan {at} a2o.si>
+ * @author Teon d.o.o.
+ * @licence GNU AGPL
+ *
+ * Inspired by:
+ * - Patrik Kullman / Roland 'rosali' Liebl / Cor Bosman <roundcube@wa.ter.net>
+ * - https://github.com/corbosman/keyboard_shortcuts
+ * - https://plugins.roundcube.net/packages/cor/keyboard_shortcuts
  */
 $(function() {
 
