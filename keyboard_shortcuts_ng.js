@@ -52,6 +52,11 @@ $(function() {
      */
     $(window.setTimeout(function() {
 
+        // Do not enable this in non-compose tasks
+        if (rcmail.env.action != 'compose') {
+            return;
+        }
+
         // Capture TinyMCE keyboard events as first event handler
         rcmail.editor.editor.on('keydown', function(e) {
 
