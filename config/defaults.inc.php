@@ -344,6 +344,15 @@ $config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDe
 $config['keyboard_shortcuts_ng']['association_map_os_native_linux'][]   = $_ksDef;
 $config['keyboard_shortcuts_ng']['association_map_compat_rc_plugin'][]  = $_ksDef;
 
+// Return from composing to mailbox view
+$_ksDef = array(
+        'shortcut' => 'esc',
+            'context' => $_ctxC,
+                'action' => 'task_switch',
+                    'action_args' => array('task' => 'mail'),
+);
+$config['keyboard_shortcuts_ng']['association_map_ng_awesome'][]        = $_ksDef;
+
 
 
 $_ksDef = array(

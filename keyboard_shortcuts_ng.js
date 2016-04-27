@@ -230,6 +230,9 @@ function ks_ng_generate_keypress_id (e)
         case 13:
             id += 'enter'; break;
 
+        case 27:
+            id += 'esc';  break;
+
         case 37:
             id += 'left';  break;
         case 38:
