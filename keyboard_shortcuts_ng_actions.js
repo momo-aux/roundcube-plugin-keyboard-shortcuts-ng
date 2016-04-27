@@ -197,7 +197,7 @@ ks_ng_actions.preview_scroll_up = function (context, rcmailobj, windowobj)
 {
     iframeCnt = $('#messagecontframe').contents();
     curPos    = iframeCnt.scrollTop();
-    iframeCnt.scrollTop(curPos - 50);
+    iframeCnt.find("html, body").animate({ scrollTop: (curPos - 100) }, 80);
 
     return false;
 }
@@ -208,7 +208,7 @@ ks_ng_actions.preview_scroll_down = function (context, rcmailobj, windowobj)
 {
     iframeCnt = $('#messagecontframe').contents();
     curPos    = iframeCnt.scrollTop();
-    iframeCnt.scrollTop(curPos + 50);
+    iframeCnt.find("html, body").animate({ scrollTop: (curPos + 100) }, 80);
 
     return false;
 }
