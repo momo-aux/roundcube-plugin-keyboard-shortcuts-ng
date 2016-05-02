@@ -111,19 +111,22 @@ class keyboard_shortcuts_ng extends rcube_plugin
         // Now that config is complete, generate association hash
         $this->regenerate_association_hash();
 
-        // Pass configuration to frontend
-        $this->rc->output->set_env('ks_ng_supported_contexts', $this->supported_contexts);
-        $this->rc->output->set_env('ks_ng_association_hash',   $this->association_hash);
-
         // Only load this plugin once user is logged in and when newuserdialog is complete
+        // FIXME verify how to check if we are in active web session
+        // output->setenv breaks bin/updatecss.sh run if used in CLI mode
         if ($_SESSION['username'] && empty($_SESSION['plugin.newuserdialog'])) {
+
+            // Pass configuration to frontend
+            $this->rc->output->set_env('ks_ng_supported_contexts', $this->supported_contexts);
+            $this->rc->output->set_env('ks_ng_association_hash',   $this->association_hash);
+
             $this->include_stylesheet('keyboard_shortcuts_ng.css');
             $this->include_script('keyboard_shortcuts_ng_actions.js');
             $this->include_script('keyboard_shortcuts_ng.js');
-        }
 
-        // Enable translations
-        $this->add_texts('localization', true);
+            // Enable translations
+            $this->add_texts('localization', true);
+        }
     }
 
 
